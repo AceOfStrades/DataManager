@@ -1,0 +1,26 @@
+websites : {
+    {
+        name : "Gate.io",
+        url : {"https://www.gate.io/"},
+        fonctionnel: True,
+        financial_instruments: []
+
+    },
+    {
+        name : "Gate.io",
+        url : {"https://www.gate.io/"},
+        fonctionnel: True,
+    };
+};
+
+financial_instrument: 
+"Bitcoin": {
+    {
+    id : "001CC",
+    symbol: "BTC",
+    type:"timeseries",
+    interval:"1m",
+    start_date: "2015-07-01T00:00:00",
+    end_date: "2015-07-02T00:00:00",
+    }
+};
