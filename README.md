@@ -20,21 +20,101 @@ This repository contains a simple Django app as part of the **Deploying a Produc
 - [Authors](#authors)
 
 ## Project Layout:
+````
+.
+├── Dockerfile
+├── README.md
+├── requirements.txt
+├── manage.py
+├── data_manager
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   ├── api
+│   │   ├── __init__.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   │   ├── serializers.py
+│   │   └── tests.py
+│   ├── dashboard
+│   │   ├── __init__.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   │   ├── models.py
+│   │   └── templates
+│   │       └── dashboard
+│   │           ├── index.html
+│   │           └── ...
+│   ├── scraper
+│   │   ├── __init__.py
+│   │   ├── items.py
+│   │   ├── pipelines.py
+│   │   ├── settings.py
+│   │   ├── middlewares.py
+│   │   ├── spiders
+│   │   │   ├── __init__.py
+│   │   │   ├── source1.py
+│   │   │   ├── source2.py
+│   │   │   └── ...
+│   │   └── utils
+│   │       ├── __init__.py
+│   │       ├── validation.py
+│   │       └── ...
+│   ├── resources
+│   │   ├── __init__.py
+│   │   ├── urls.py
+│   │   ├── api_keys.py
+│   │   └── ...
+│   └── strategies
+│       ├── __init__.py
+│       ├── strategy1.py
+│       ├── strategy2.py
+│       └── ...
+├── data_science
+│   ├── __init__.py
+│   ├── data_processing.py
+│   ├── models.py
+│   └── utils
+│       ├── __init__.py
+│       ├── evaluation_metrics.py
+│       └── ...
+└── tor
+    └── Dockerfile
 
-```
-DATAMANAGER/
-  |___ backend/ (Django Backend settings)
-  |   |___ settings.py
-  |___ static_files/
-  |___ templates/ (Django Templates)
-  |   |___ index.html
-  |___ scripts/
-  |___ manage.py
-  |___ requirements.txt
-  |___ Dockerfile
-  |___ docker-compose.yml
+````
+The structure is explained as follows:
 
-```
+- Dockerfile: Docker configuration file.
+- README.md: Documentation of the project.
+- requirements.txt: Python dependencies.
+
+- manage.py: Django management script.
+- data_manager: Django project directory.
+- settings.py: Django project settings.
+- urls.py: Django project URL configuration.
+- wsgi.py: WSGI entry point for Django project.
+- api: Directory for the Django Rest Framework application.
+- views.py: Django Rest Framework views.
+- serializers.py: Django Rest Framework serializers.
+- dashboard: Directory for the Django Dashboard application.
+- views.py: Django views.
+- models.py: Django models.
+- templates: HTML templates for the dashboard.
+- scraper: Directory for the Scrapy application.
+- items.py: Scrapy items.
+- pipelines.py: Scrapy pipelines.
+- settings.py: Scrapy settings.
+- middlewares.py: Scrapy middlewares.
+- spiders: Directory for Scrapy spiders.
+- utils: Directory for utility scripts (like data validation).
+
+- strategies: Directory for the logic for the financial strategies created by the user. Each strategy would be its own Python file.
+- resources: Directory for the addresses of the websites and API keys required for the data scraping. urls.py could contain website URLs, while api_keys.py would contain the API keys.
+- data_science: Directory for data processing and running the models for the financial strategies. It can contain scripts for pre-processing (data_processing.py), model training, and application (models.py), and evaluation metrics (utils/evaluation_metrics.py).
+
+- tor: Directory for the Tor configuration (if required).
+- Dockerfile: Docker configuration for the Tor service.
 
 The default settings are typically built for development rather than production and I found it difficult to change my settings after building the project. My inspiration comes from this article here: https://djangostars.com/blog/configuring-django-settings-best-practices/ where the different approaches are listed. 
 
@@ -48,6 +128,9 @@ I have also included the **django-debug-toolbar** (https://django-debug-toolbar.
 
 - Python 3.9+
 - Django 4.0+
+- Docker
+- Scrapy
+- Tor Browser
 
 ## Setting up the Django-Scrapper-app project with Docker
 
@@ -205,15 +288,52 @@ show software informations
 manage user setup
 
 **- Components-**
+
+Main Screen:
 ```
     - navbar:
         - logo/home button
-        - 
-    - toolbar:
-       - search bar
-       - connect button
+        - search bar
+        - connection:
+            - login button
+            - register button
+            - wallet button
+
+        - messages button
+        - shopping cart button
+        - user profile:
+            - notifications
+            - bots
+            - strategies
+            - tactics
+            - agenda
+            - plannings
+            - relations
+            - events
+            - organizations
+            - wallet
+            - performances
+            - settings:
+                - language button
+                - theme button
+                - help button
+                - about button
+                - contact button
+    - Dashboard:
+        - Overall Data:
+            - Selection/Notations : news, markets, reports documentations, statistics, states
+        - Trades:
+            - Defintions : relations, tactics, strategies, agenda, plannings
+        - Results:
+            - Decisions : Bots, Wallets, performances
+        - Community:    
+            - Communications: Shop, messages, contacts, events, organizations
+        - 4D Relational Databases visualization
+        - Scheduler
+        - Settings
+        - Components
+        
 ```
-écran principal:
 Titre / bouton "start" / vérification du profil.
 
 écran de connexion au profil:
@@ -296,9 +416,6 @@ It is accessed from a lot of differents places by the code and used to get infor
 ```
 
 --------------------------------------------------
-
-
--------------------------------------------------------------------------
 ## Web Server:
 
 NGINX
@@ -335,8 +452,7 @@ Tor
 - Twilio (for sending text messages)
 ```
 
-------------------------------------------------------------------------------------------
-
+-------------------------------------------------------------------------
 ## Architecture of the Relational Databases:
 
 #### PostgreSQL
@@ -366,6 +482,33 @@ Garde l'ordre et le temps dans lesquels ce programme "Scrapper" a opéré ses di
 **Platforms**:
 | PlatformID (PK) | PlatformName (Facebook, Youtube, likedin, etc) |
 
+------------------------------------------------------------------------------------------
+
+## Sources:
+
+### Documentation:
+- [Django Documentation](https://docs.djangoproject.com/en/3.0/)
+- [Django REST Framework](https://www.django-rest-framework.org/)
+
+### Financial Github examples:
+- [Finance Tool Kit](https://github.com/JerBouma/FinanceToolkit)
+- [Complete Financial Database](https://github.com/JerBouma/FinanceDatabase)
+- [CryptoStore Container wrapper for CryptoFeed ](https://github.com/bmoscon/cryptostore)
+- [CryptoFeed for crypto](https://github.com/bmoscon/cryptofeed)
+- [FinMarket](https://github.com/cuemacro/finmarketpy)
+- [CCXT – CryptoCurrency eXchange Trading Library](https://github.com/ccxt/ccxt)
+- [Vectorbt](https://github.com/polakowo/vectorbt)
+- [Finagg Financial Aggregations](https://github.com/theOGognf/finagg)
+- [Wallstreet Python lib for Finance](https://github.com/mcdallas/wallstreet)
+- [Findatapy](https://github.com/cuemacro/findatapy)
+
+- [Basic Financial Webscrapper](https://github.com/je-suis-tm/web-scraping)
+- [Webscrapping Tutorial](https://github.com/je-suis-tm/web-scraping)
+- [Flask Postgres Apache server](https://github.com/aviaryan/flask-postgres-apache-server)
+- [Tor Scrapper](https://github.com/WiliTest/Anonymous-scrapping-Scrapy-Tor-Privoxy-UserAgent)
+
+### Articles:
+- [List of financial resources](https://github.com/mr-karan/awesome-investing)
 ---------------------------------------------------------------------------------------------------
 
 ## Author
